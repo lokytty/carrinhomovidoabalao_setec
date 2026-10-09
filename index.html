@@ -1,1 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SETEC - Projetos de Física: Carrinho Movido a Balão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        accent: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311b92 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-brand-500 selection:text-white">
 
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center font-bold text-xl shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid font-bold text-white text-lg">🚀</i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">SETEC Física</span>
+                        <span class="text-xs block text-brand-400 font-semibold tracking-wider">PROJETO DE MECÂNICA</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#teoria" class="text-slate-300 hover:text-white transition-colors">Fundamentação Teórica</a>
+                    <a href="#simulador" class="text-slate-300 hover:text-white transition-colors">Simulador Físico</a>
+                    <a href="#passo-a-passo" class="text-slate-300 hover:text-white transition-colors">Montagem & Checklist</a>
+                    <a href="#equipe" class="text-slate-300 hover:text-white transition-colors">Equipe SETEC</a>
+                    <button onclick="toggleGithubModal()" class="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-semibold transition-all duration-200 shadow-md shadow-brand-600/30 flex items-center space-x-2">
+                        <i class="fa-brands fa-github"></i>
+                        <span>Publicar no GitHub</span>
+                    </button>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-slate-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menu Mobile -->
+        <div id="mobileMenu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-slate-800 bg-slate-950">
+            <a href="#teoria" class="block py-2 text-slate-300 hover:text-white">Teórica</a>
+            <a href="#simulador" class="block py-2 text-slate-300 hover:text-white">Simulador</a>
+            <a href="#passo-a-passo" class="block py-2 text-slate-300 hover:text-white">Montagem</a>
+            <a href="#equipe" class="block py-2 text-slate-300 hover:text-white">Equipe</a>
+            <button onclick="toggleGithubModal()" class="w-full text-left py-2 text-brand-400 font-semibold">Publicar no GitHub Pages</button>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-20 gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#4f46e51a,transparent_50%)]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wide uppercase">
+                        <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                        <span>Trabalho Integrado SETEC & Física</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+                        Carrinho Movido a <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-accent-400 to-indigo-300">Balão</span>
+                    </h1>
+                    <p class="text-lg text-slate-300 font-normal leading-relaxed">
+                        Demonstração prática da <strong>3ª Lei de Newton (Ação e Reação)</strong> e princípios fundamentais da física mecânica através da conversão de energia elástica em energia cinética.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="#simulador" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-500 hover:to-accent-400 text-white font-bold transition-all transform hover:-translate-y-0.5 shadow-lg shadow-brand-500/25 flex items-center space-x-2">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Testar Simulador Virtual</span>
+                        </a>
+                        <a href="#teoria" class="px-6 py-3.5 rounded-xl glass-card hover:bg-white/10 text-slate-200 font-semibold transition-all border border-slate-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Ver Conceitos Físicos</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative flex justify-center">
+                    <div class="w-full max-w-lg p-6 rounded-3xl glass-card border border-slate-700/50 shadow-2xl relative overflow-hidden">
+                        <div class="text-center py-8">
+                            <div class="relative inline-block">
+                                <i class="fa-solid fa-car-side text-8xl text-slate-200"></i>
+                                <span class="absolute -top-4 -right-4 text-6xl animate-bounce">🎈</span>
+                            </div>
+                            <div class="mt-6 space-y-2">
+                                <h3 class="text-xl font-bold text-white">Projeto Protótipo SETEC</h3>
+                                <p class="text-sm text-slate-400">Desenvolvido com materiais recicláveis (PET, canudos, tampinhas e bexiga de látex).</p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 mt-6 pt-6 border-t border-slate-800 text-center">
+                                <div class="bg-slate-900/60 p-2 rounded-xl">
+                                    <span class="block text-xs text-slate-400">Massa Média</span>
+                                    <span class="text-sm font-bold text-accent-400">45 - 75g</span>
+                                </div>
+                                <div class="bg-slate-900/60 p-2 rounded-xl">
+                                    <span class="block text-xs text-slate-400">Propulsão</span>
+                                    <span class="text-sm font-bold text-brand-400">Ar comprimido</span>
+                                </div>
+                                <div class="bg-slate-900/60 p-2 rounded-xl">
+                                    <span class="block text-xs text-slate-400">Distância Max</span>
+                                    <span class="text-sm font-bold text-emerald-400">~ 5.5m</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="teoria" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-400 tracking-widest uppercase">Fundamentação Teórica</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Como a Física Faz o Carrinho Andar?</p>
+                <p class="text-slate-400 mt-4">Análise dos conceitos de mecânica, gravidade, atrito e termodinâmica aplicados neste projeto experimental.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-8 rounded-2xl glass-card hover:border-brand-500/50 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-600/20 text-brand-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-arrows-left-right"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">3ª Lei de Newton (Ação e Reação)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        A toda ação corresponde uma reação de mesma intensidade e direção, mas de sentido oposto.
+                    </p>
+                    <div class="mt-4 p-3 bg-slate-950/50 rounded-xl text-xs text-slate-300 font-mono">
+                        Ação: Ar expulso para trás<br>
+                        Reação: Carrinho impulsionado para a frente
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-8 rounded-2xl glass-card hover:border-accent-500/50 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-accent-500/20 text-accent-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Conservação de Energia</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        A energia potencial elástica armazenada no látex deformado da bexiga é convertida em energia cinética (movimento).
+                    </p>
+                    <div class="mt-4 p-3 bg-slate-950/50 rounded-xl text-xs text-slate-300 font-mono">
+                        Epe = (k · x²) / 2  ➔  Ec = (m · v²) / 2
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-8 rounded-2xl glass-card hover:border-emerald-500/50 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Forças de Atrito e Resistência</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        O atrito nos eixos das rodas e a resistência do ar limitam o alcance do carrinho. Reduzir o peso e alinhar eixos otimiza a distância.
+                    </p>
+                    <div class="mt-4 p-3 bg-slate-950/50 rounded-xl text-xs text-slate-300 font-mono">
+                        Fat = μ · N (Reduzir atrito nos eixos)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="simulador" class="py-20 bg-slate-950 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold text-brand-400 tracking-widest uppercase">Laboratório Virtual</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Simulador de Propulsão</p>
+                <p class="text-slate-400 mt-2">Ajuste os parâmetros físicos e visualize o comportamento do carrinho em tempo real.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Painel de Controles -->
+                <div class="glass-card p-6 rounded-2xl space-y-6 border border-slate-800">
+                    <h3 class="text-lg font-bold text-white border-b border-slate-800 pb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-sliders text-brand-400"></i>
+                        <span>Parâmetros de Teste</span>
+                    </h3>
+
+                    <!-- Controle Balão -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <label class="text-slate-300">Volume do Balão (Ar)</label>
+                            <span id="balaoVal" class="text-brand-400 font-bold">Medium (100%)</span>
+                        </div>
+                        <input type="range" id="balaoInput" min="50" max="150" value="100" class="w-full accent-brand-500 bg-slate-800 rounded-lg h-2">
+                    </div>
+
+                    <!-- Controle Peso -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <label class="text-slate-300">Massa do Carrinho (m)</label>
+                            <span id="pesoVal" class="text-brand-400 font-bold">50 g</span>
+                        </div>
+                        <input type="range" id="pesoInput" min="30" max="120" value="50" class="w-full accent-brand-500 bg-slate-800 rounded-lg h-2">
+                    </div>
+
+                    <!-- Controle Bocal -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <label class="text-slate-300">Diâmetro do Canudo (Bocal)</label>
+                            <span id="canudoVal" class="text-brand-400 font-bold">Médio (6 mm)</span>
+                        </div>
+                        <input type="range" id="canudoInput" min="3" max="10" value="6" class="w-full accent-brand-500 bg-slate-800 rounded-lg h-2">
+                    </div>
+
+                    <!-- Botoes de Ação -->
+                    <div class="pt-4 space-y-3">
+                        <button id="btnLancar" class="w-full py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold transition-all shadow-lg shadow-brand-600/30 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-rocket"></i>
+                            <span>Inflar & Lançar</span>
+                        </button>
+                        <button id="btnReset" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span>Reiniciar Pista</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas da Animação e Telemetria -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-card p-4 rounded-2xl border border-slate-800 relative overflow-hidden">
+                        <canvas id="simCanvas" class="w-full h-64 bg-slate-900 rounded-xl block"></canvas>
+                    </div>
+
+                    <!-- Painel Telemetria -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="glass-card p-4 rounded-xl text-center border border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Distância Percorrida</span>
+                            <span id="teleDist" class="text-2xl font-black text-emerald-400">0.00 m</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl text-center border border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Velocidade Máxima</span>
+                            <span id="teleVel" class="text-2xl font-black text-brand-400">0.00 km/h</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl text-center border border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Tempo de Percurso</span>
+                            <span id="teleTime" class="text-2xl font-black text-accent-400">0.0 s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="passo-a-passo" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-400 tracking-widest uppercase">Guia Prático</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Materiais & Passo a Passo</p>
+                <p class="text-slate-400 mt-2">Instruções para replicar o projeto da SETEC na sua escola ou feira de ciências.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Checklist de Materiais -->
+                <div class="glass-card p-8 rounded-2xl border border-slate-800">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-list-check text-emerald-400"></i>
+                        <span>Lista de Materiais Recicláveis</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <label class="flex items-center space-x-3 p-3 bg-slate-950/40 rounded-xl cursor-pointer hover:bg-slate-950/80 transition-colors">
+                            <input type="checkbox" checked class="w-5 h-5 rounded accent-brand-500">
+                            <span class="text-slate-300 text-sm">1 Garrafa PET pequena (ou pedaço de papelão) para o chassi</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 bg-slate-950/40 rounded-xl cursor-pointer hover:bg-slate-950/80 transition-colors">
+                            <input type="checkbox" checked class="w-5 h-5 rounded accent-brand-500">
+                            <span class="text-slate-300 text-sm">4 Tampinhas de garrafa PET para as rodas</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 bg-slate-950/40 rounded-xl cursor-pointer hover:bg-slate-950/80 transition-colors">
+                            <input type="checkbox" checked class="w-5 h-5 rounded accent-brand-500">
+                            <span class="text-slate-300 text-sm">2 Palitos de churrasco de madeira (eixos)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 bg-slate-950/40 rounded-xl cursor-pointer hover:bg-slate-950/80 transition-colors">
+                            <input type="checkbox" checked class="w-5 h-5 rounded accent-brand-500">
+                            <span class="text-slate-300 text-sm">2 Canudos plásticos mais largos (guias do eixo)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 bg-slate-950/40 rounded-xl cursor-pointer hover:bg-slate-950/80 transition-colors">
+                            <input type="checkbox" checked class="w-5 h-5 rounded accent-brand-500">
+                            <span class="text-slate-300 text-sm">1 Bexiga / Balão de festa (Nº 8 ou 9)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 bg-slate-950/40 rounded-xl cursor-pointer hover:bg-slate-950/80 transition-colors">
+                            <input type="checkbox" checked class="w-5 h-5 rounded accent-brand-500">
+                            <span class="text-slate-300 text-sm">Fita adesiva, liga de borracha e cola quente</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Etapas de Construção -->
+                <div class="space-y-4">
+                    <div class="p-6 rounded-2xl glass-card border border-slate-800 flex space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-600/30 text-brand-400 font-bold flex items-center justify-center shrink-0">1</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-1">Montagem dos Eixos</h4>
+                            <p class="text-slate-400 text-sm">Cole os dois canudos guia na parte inferior da garrafa PET de forma paralela. Passe os palitos de churrasco por dentro dos canudos.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card border border-slate-800 flex space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-600/30 text-brand-400 font-bold flex items-center justify-center shrink-0">2</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-1">Fixação das Rodas</h4>
+                            <p class="text-slate-400 text-sm">Faça furos centrais nas 4 tampinhas e encaixe-as nas pontas dos palitos. Fixe com cola quente para evitar que deslizem em falso.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card border border-slate-800 flex space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-600/30 text-brand-400 font-bold flex items-center justify-center shrink-0">3</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-1">Sistema de Propulsão</h4>
+                            <p class="text-slate-400 text-sm">Prenda o balão no canudo com uma liga de borracha ou fita isolante, garantindo vedação total sem amassar o canudo.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl glass-card border border-slate-800 flex space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-600/30 text-brand-400 font-bold flex items-center justify-center shrink-0">4</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-1">Fixação no Chassi</h4>
+                            <p class="text-slate-400 text-sm">Fixe o canudo na parte superior do carrinho com a ponta direcionada para trás, garantindo empuxo em linha reta.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="equipe" class="py-20 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-400 tracking-widest uppercase">Créditos do Projeto</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Equipe de Desenvolvimento SETEC</p>
+                <p class="text-slate-400 mt-2">Integrantes do grupo responsável pela pesquisa, montagem e relatório de física.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-6 rounded-2xl glass-card border border-slate-800 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 p-1 mb-4">
+                        <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center font-bold text-2xl text-white">
+                            E1
+                        </div>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Estudante 1</h4>
+                    <span class="text-xs text-brand-400 font-medium">Montagem & Testes</span>
+                    <p class="text-xs text-slate-400 mt-2">Responsável pela construção do protótipo e calibragem dos eixos.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl glass-card border border-slate-800 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 p-1 mb-4">
+                        <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center font-bold text-2xl text-white">
+                            E2
+                        </div>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Estudante 2</h4>
+                    <span class="text-xs text-brand-400 font-medium">Relatório Teórico</span>
+                    <p class="text-xs text-slate-400 mt-2">Redação científica e cálculos de aceleração e conservação energética.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl glass-card border border-slate-800 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 p-1 mb-4">
+                        <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center font-bold text-2xl text-white">
+                            E3
+                        </div>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Estudante 3</h4>
+                    <span class="text-xs text-brand-400 font-medium">Apresentação & Slides</span>
+                    <p class="text-xs text-slate-400 mt-2">Elaboração dos recursos visuais e demonstração prática na SETEC.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl glass-card border border-slate-800 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 p-1 mb-4">
+                        <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center font-bold text-2xl text-white">
+                            E4
+                        </div>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Estudante 4</h4>
+                    <span class="text-xs text-brand-400 font-medium">Website & Código</span>
+                    <p class="text-xs text-slate-400 mt-2">Desenvolvimento do site interativo e simulador em HTML/CSS/JS.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="githubModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-3xl p-8 relative shadow-2xl">
+            <button onclick="toggleGithubModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center space-x-3 mb-6">
+                <i class="fa-brands fa-github text-3xl text-brand-400"></i>
+                <h3 class="text-2xl font-bold text-white">Como Colocar Este Site no GitHub Pages</h3>
+            </div>
+            
+            <div class="space-y-4 text-sm text-slate-300 max-h-[60vh] overflow-y-auto pr-2">
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                    <h4 class="font-bold text-white mb-1">Passo 1: Criar Repositório</h4>
+                    <p>Acesse o <a href="https://github.com" target="_blank" class="text-brand-400 underline">GitHub</a>, crie uma conta (se não tiver) e clique em <strong>New Repository</strong>. Nomeie como <code class="bg-slate-800 px-2 py-0.5 rounded text-accent-400">carrinho-balao-setec</code>.</p>
+                </div>
+
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                    <h4 class="font-bold text-white mb-1">Passo 2: Criar o arquivo `index.html`</h4>
+                    <p>Dentro do repositório no GitHub, clique em <strong>Add file ➔ Create new file</strong>, nomeie o arquivo exatamente como <code class="bg-slate-800 px-2 py-0.5 rounded text-accent-400">index.html</code> e cole o código deste projeto.</p>
+                </div>
+
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                    <h4 class="font-bold text-white mb-1">Passo 3: Ativar o GitHub Pages</h4>
+                    <p>Vá em <strong>Settings ➔ Pages</strong> (no menu lateral do seu repositório). Em <em>Build and deployment / Branch</em>, selecione <code class="bg-slate-800 px-2 py-0.5 rounded text-accent-400">main</code> e clique em <strong>Save</strong>.</p>
+                </div>
+
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                    <h4 class="font-bold text-white mb-1">Passo 4: Seu Site está no Ar!</h4>
+                    <p>Aguarde ~1 minuto. O GitHub gerará um link público como: <br><code class="bg-slate-800 px-2 py-0.5 rounded text-emerald-400 block mt-1">https://seu-usuario.github.io/carrinho-balao-setec/</code></p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-800 text-right">
+                <button onclick="toggleGithubModal()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl">Entendi!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Modal GitHub
+        function toggleGithubModal() {
+            const modal = document.getElementById('githubModal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Toggle Menu Mobile
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        // SIMULADOR FÍSICO EM CANVAS
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Parâmetros Físicos
+        const balaoInput = document.getElementById('balaoInput');
+        const pesoInput = document.getElementById('pesoInput');
+        const canudoInput = document.getElementById('canudoInput');
+
+        const balaoVal = document.getElementById('balaoVal');
+        const pesoVal = document.getElementById('pesoVal');
+        const canudoVal = document.getElementById('canudoVal');
+
+        const btnLancar = document.getElementById('btnLancar');
+        const btnReset = document.getElementById('btnReset');
+
+        const teleDist = document.getElementById('teleDist');
+        const teleVel = document.getElementById('teleVel');
+        const teleTime = document.getElementById('teleTime');
+
+        // Estado da Animação
+        let isRunning = false;
+        let carX = 50;
+        let velX = 0;
+        let maxVel = 0;
+        let distance = 0;
+        let time = 0;
+        let airVolume = 0;
+        let initialAir = 0;
+        let lastTime = 0;
+
+        function updateLabels() {
+            balaoVal.innerText = `${balaoInput.value}%`;
+            pesoVal.innerText = `${pesoInput.value} g`;
+            canudoVal.innerText = `${canudoInput.value} mm`;
+        }
+
+        balaoInput.addEventListener('input', updateLabels);
+        pesoInput.addEventListener('input', updateLabels);
+        canudoInput.addEventListener('input', updateLabels);
+
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Desenhar Pista de Teste
+            const groundY = canvas.height - 40;
+            
+            // Chão
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(0, groundY, canvas.width, 40);
+            
+            // Marcações de Metros
+            ctx.fillStyle = '#64748b';
+            ctx.font = '10px Plus Jakarta Sans';
+            for(let i = 0; i < canvas.width; i += 60) {
+                ctx.fillRect(i, groundY, 2, 8);
+                const meter = (i / 60).toFixed(1);
+                ctx.fillText(`${meter}m`, i - 8, groundY + 22);
+            }
+
+            // Desenhar Carrinho
+            const carWidth = 60;
+            const carHeight = 25;
+            const carY = groundY - carHeight - 10;
+
+            // Corpo do Carrinho
+            ctx.fillStyle = '#4f46e5';
+            ctx.beginPath();
+            ctx.roundRect(carX, carY, carWidth, carHeight, 6);
+            ctx.fill();
+
+            // Rodas
+            ctx.fillStyle = '#e2e8f0';
+            ctx.beginPath();
+            ctx.arc(carX + 12, groundY - 6, 8, 0, Math.PI * 2);
+            ctx.arc(carX + carWidth - 12, groundY - 6, 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Detalhe Rodas
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            ctx.arc(carX + 12, groundY - 6, 3, 0, Math.PI * 2);
+            ctx.arc(carX + carWidth - 12, groundY - 6, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Canudo de Propulsão
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillRect(carX - 15, carY + 8, 25, 6);
+
+            // Desenhar Balão
+            if (airVolume > 5) {
+                const balloonRadius = 10 + (airVolume / 100) * 22;
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath();
+                ctx.ellipse(carX + 15, carY - 2, balloonRadius, balloonRadius * 0.8, 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Animação de Ar Sendo Expulso
+            if (isRunning && airVolume > 0 && velX > 0) {
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.6)';
+                for(let i = 0; i < 3; i++) {
+                    ctx.beginPath();
+                    ctx.arc(carX - 20 - (Math.random() * 20), carY + 11 + (Math.random() * 6 - 3), 3 + Math.random() * 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        }
+
+        function animate(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const dt = (timestamp - lastTime) / 1000;
+            lastTime = timestamp;
+
+            if (isRunning) {
+                const mass = parseFloat(pesoInput.value) / 1000; // kg
+                const nozzle = parseFloat(canudoInput.value); // mm
+                
+                // Cálculo de Empuxo do Ar
+                if (airVolume > 0) {
+                    const thrust = (nozzle / 5) * 0.18; // N
+                    const accel = thrust / mass;
+                    velX += accel * dt * 35;
+                    airVolume -= (nozzle * 18) * dt;
+                    if (airVolume < 0) airVolume = 0;
+                } else {
+                    // Desaceleração por Atrito
+                    const friction = 0.45;
+                    velX -= friction * dt * 20;
+                    if (velX < 0) velX = 0;
+                }
+
+                // Atualizar Posição
+                carX += velX * dt * 10;
+                distance = (carX - 50) / 60; // Metros na escala
+                time += dt;
+
+                if (velX > maxVel) maxVel = velX;
+
+                // Parar ao zerar velocidade
+                if (velX <= 0 && airVolume <= 0) {
+                    isRunning = false;
+                }
+
+                // Limite da pista Canvas
+                if (carX > canvas.width - 70) {
+                    carX = canvas.width - 70;
+                    isRunning = false;
+                }
+
+                // Atualizar Telemetria
+                teleDist.innerText = `${Math.max(0, distance).toFixed(2)} m`;
+                teleVel.innerText = `${(maxVel * 1.8).toFixed(1)} km/h`;
+                teleTime.innerText = `${time.toFixed(1)} s`;
+            }
+
+            drawScene();
+            requestAnimationFrame(animate);
+        }
+
+        btnLancar.addEventListener('click', () => {
+            carX = 50;
+            velX = 0;
+            maxVel = 0;
+            distance = 0;
+            time = 0;
+            airVolume = parseFloat(balaoInput.value);
+            initialAir = airVolume;
+            isRunning = true;
+            lastTime = 0;
+        });
+
+        btnReset.addEventListener('click', () => {
+            isRunning = false;
+            carX = 50;
+            velX = 0;
+            maxVel = 0;
+            distance = 0;
+            time = 0;
+            airVolume = 0;
+            teleDist.innerText = '0.00 m';
+            teleVel.innerText = '0.00 km/h';
+            teleTime.innerText = '0.0 s';
+            drawScene();
+        });
+
+        // Inicializar Tela
+        drawScene();
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>
